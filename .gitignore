@@ -1,0 +1,17 @@
+# Ignore SQLite database files
+/etc/todos/todo.db
+
+# Node.js dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+
+# Docker-related files
+docker-compose.override.yml
+.terraform/
+.vscode/

@@ -1,0 +1,22 @@
+apiVersion : apps/v1
+kind : Deployment
+metadata:
+  name : {{ .Release.Name }}-{{ .Values.app.name }}
+  labels :
+    app : {{ .Release.Name }}-{{ .Values.app.name }}
+spec:
+  replicas : 1
+  selector :
+    matchLabels :
+      app : {{ .Release.Name }}-{{ .Values.app.name }}
+  template :
+    metadata :
+      labels :
+        app : {{ .Release.Name }}-{{ .Values.app.name }}
+    spec:
+      containers :
+        - name : {{ .Release.Name }}-{{ .Values.app.name }}
+          image : {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy : {{ .Values.image.pullPolicy }}
+          ports :
+            - containerPort : {{ .Values.app.containerPort }} 

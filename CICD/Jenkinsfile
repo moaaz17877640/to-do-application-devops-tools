@@ -1,0 +1,58 @@
+stages{
+    agent any
+
+    stage('Build'){
+        steps{
+            script{
+                echo "Building the project..."
+                // Add your build commands here
+            }
+        }
+    }
+    stage('Test'){
+        steps{
+            script{
+                echo "Running tests..."
+                // Add your test commands here
+            }
+        }
+    }
+    stage('Deploy'){
+        steps{
+            script{
+                echo "Deploying the project..."
+                // Add your deployment commands here
+            }
+        }
+    } 
+    stage('Cleanup'){
+        steps{
+            script{
+                echo "Cleaning up..."
+                // Add your cleanup commands here
+            }
+        }
+    }
+    stage('Notify'){
+        steps{
+            script{
+                echo "Sending notifications..."
+                // Add your notification commands here
+            }
+        }
+    }   
+    stage('deploy'){
+        steps{
+            script{
+                echo "Archiving artifacts..."
+                // Add your archiving commands here
+            }
+        }
+
+    }
+
+
+
+
+
+}

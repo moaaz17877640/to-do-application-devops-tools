@@ -1,0 +1,123 @@
+---
+- hosts: ec2
+  become: true
+  become_user: root
+  vars:
+    user: "ubuntu"
+    app_port: "8080"
+  vars:
+    user: "ubuntu"
+    app_port: "8080"
+
+  tasks:
+    - name: update packages
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+        upgrade: dist
+        name: "*"
+        state: latest
+
+    - name: install docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: install docker-compose
+      apt:
+        name: docker-compose
+        state: present
+        update_cache: yes
+
+    - name: install docker-cli
+      apt:
+        name: docker-cli
+        state: present
+        update_cache: yes
+
+    - name: install docker-compose-plugin
+      apt:
+        name: docker-compose-plugin
+        state: present
+        update_cache: yes
+
+    - name: install minikube
+      apt:
+        name: minikube
+        state: present
+        update_cache: yes
+
+    - name: install kubectl
+      apt:
+        name: kubectl
+        state: present
+        update_cache: yes
+
+    - name: Pull image
+      community.docker.docker_image_pull:
+        name: moaaz17877640moaaz17877640/to-do-app
+        tag: v1
+
+    - name: Start container
+      community.docker.docker_container:
+        cleanup: true
+        detach: false
+        image: moaaz17877640moaaz17877640/to-do-app:v1
+        name: my-todo-container
+        ports:
+          - "{{ app_port }}:{{ app_port }}"
+        state: started
+    - name: Show output
+
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: latest
+        update_cache: yes
+        state: latest
+        update_cache: yes
+
+    - name: Add user to group root
+      user:
+        name: "{{ user }}"
+        groups: root
+        state: present
+
+    - name: Remove default nginx configuration
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+    - name: Add nginx configuration
+      copy:
+        src: /path/to/static-site-config
+        dest: /etc/nginx/sites-available/static-site-config
+        owner: "{{ user }}"
+        dest: /etc/nginx/sites-available/
+        owner: "{{ user }}"
+        src: /path/to/static-site-config
+        dest: /etc/nginx/sites-available/
+
+    - name: Enable website configuration
+      file:
+        src: /etc/nginx/sites-available/static-site-config
+        dest: /etc/nginx/sites-enabled/static-site-config
+        state: link
+
+    - name: Ensure nginx is running
+      systemd:
+    - name: Validate nginx configuration
+      command: nginx -t
+      register: nginx_test
+      ignore_errors: yes
+
+    - name: Fail if nginx configuration is invalid
+      fail:
+        msg: "Nginx configuration is invalid. Please check the configuration."
+      when: nginx_test.rc != 0
+
+    - name: Ensure nginx is running
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
