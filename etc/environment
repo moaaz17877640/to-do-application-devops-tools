@@ -1,5 +1,0 @@
-
-SQLITE_DB_LOCATION="/etc/todos/todo.db"
-PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-NODE_VERSION="23.11.0"
-YARN_VERSION="1.22.22"
